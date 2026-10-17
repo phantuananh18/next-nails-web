@@ -20,12 +20,6 @@ export default function HomePage() {
   const featuredGallery = (featured.length > 0 ? featured : galleryItems).slice(0, 8);
 
   const telHref = salonInfo.phone ? getTelHref(salonInfo.phone) : null;
-  const socialLinks = [
-    { label: "Facebook", href: salonInfo.facebookUrl },
-    { label: "Instagram", href: salonInfo.instagramUrl },
-    { label: "TikTok", href: salonInfo.tiktokUrl },
-    { label: "Zalo", href: salonInfo.zaloUrl },
-  ].filter((l) => l.href);
 
   return (
     <div>
