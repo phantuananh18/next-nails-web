@@ -2,15 +2,14 @@ export interface ServiceItem {
   name: string;
   /** Display-only text (e.g. "110K", "200-300K", "10K/1 NGÓN"); never parsed or summed. */
   priceLabel: string;
+  /** Optional hint shown under this item, without parentheses (e.g. "Ngắn/Dài"). */
+  note?: string;
 }
 
 export interface ServiceCategory {
   id: string;
   title: string;
   services: ServiceItem[];
-  note?: string;
-  /** Where the note renders relative to the list. Defaults to "bottom". */
-  notePosition?: "top" | "bottom";
 }
 
 /**
@@ -25,10 +24,8 @@ export const serviceCategories: ServiceCategory[] = [
       { name: "Sơn Gel Hàn", priceLabel: "110K" },
       { name: "Sơn Gel nhũ - flash", priceLabel: "120K" },
       { name: "Sơn Gel thạch", priceLabel: "120K" },
-      { name: "Sơn Gel mắt mèo", priceLabel: "150K" },
+      { name: "Sơn Gel mắt mèo", priceLabel: "150K", note: "Đã bao gồm nền" },
     ],
-    note: "(Đã bao gồm nền)",
-    notePosition: "top"
   },
   {
     id: "nail-care",
@@ -48,11 +45,9 @@ export const serviceCategories: ServiceCategory[] = [
       { name: "Úp móng Gel X", priceLabel: "120K" },
       { name: "Refill Gel", priceLabel: "150K" },
       { name: "Cứng móng mỏng", priceLabel: "40K" },
-      { name: "Cứng móng tạo cầu", priceLabel: "80-150K" },
+      { name: "Cứng móng tạo cầu", priceLabel: "80-150K", note: "Ngắn/Dài" },
       { name: "Claw Nails", priceLabel: "400-700K" },
     ],
-    note: "(Ngắn/Dài)",
-    notePosition: "top"
   },
   {
     id: "designs",
@@ -77,7 +72,6 @@ export const warrantyNotice = "Bảo hành sản phẩm trong 7 ngày";
 export interface ComboGroup {
   id: string;
   items: ServiceItem[];
-  note?: string;
 }
 
 /** Promotional combos (display-only prices). Valid for customers who book in advance; the owner confirms manually. */
@@ -89,18 +83,16 @@ export const comboSale: { title: string; groups: ComboGroup[]; condition: string
       items: [
         { name: "Sạch da + sơn gel", priceLabel: "109K" },
         { name: "Sạch da + sơn thạch", priceLabel: "119K" },
-        { name: "Sạch da + mắt mèo", priceLabel: "169K" },
-      ],
-      note: "(Đã có lớp nền)",
+        { name: "Sạch da + mắt mèo", priceLabel: "169K", note:"Đã có lớp nền" },
+      ]
     },
     {
       id: "extensions-gel",
       items: [
         { name: "Úp móng gel + sơn gel", priceLabel: "199K" },
         { name: "Úp móng gel + sơn thạch", priceLabel: "209K" },
-        { name: "Úp móng gel + mắt mèo", priceLabel: "259K" },
-      ],
-      note: "(Đã có lớp nền)",
+        { name: "Úp móng gel + mắt mèo", priceLabel: "259K", note:"Đã có lớp nền" },
+      ]
     },
   ],
   condition: "Áp dụng cho khách đặt lịch trước",

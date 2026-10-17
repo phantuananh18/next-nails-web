@@ -26,12 +26,14 @@ function ComboSale() {
             <ul>
               {group.items.map((item) => (
                 <li key={item.name} className="flex items-baseline justify-between gap-4 py-2">
-                  <span className="text-base text-white">{item.name}</span>
+                  <div className="min-w-0">
+                    <span className="text-base text-white">{item.name}</span>
+                    {item.note && <p className="text-xs italic text-white/70">({item.note})</p>}
+                  </div>
                   <span className="shrink-0 text-right text-base font-semibold tabular-nums text-white">{item.priceLabel}</span>
                 </li>
               ))}
             </ul>
-            {group.note && <p className="mt-1 text-center text-sm italic text-white/70">{group.note}</p>}
           </div>
         ))}
       </div>
@@ -48,30 +50,26 @@ function ComboSale() {
 }
 
 function CategoryBlock({ category }: { category: ServiceCategory }) {
-  const note = category.note && (
-    <p className={`text-sm italic text-white/70 ${category.notePosition === "top" ? "mb-1 text-right" : "mt-3 text-center"}`}>
-      {category.note}
-    </p>
-  );
   return (
     <div>
       <CategoryHeading>{category.title}</CategoryHeading>
       <div className="mt-4">
-        {category.notePosition === "top" && note}
         <ul>
           {category.services.map((service) => (
             <li
               key={service.name}
               className="flex items-baseline justify-between gap-4 border-b border-white/10 py-2.5 last:border-b-0"
             >
-              <span className="text-base text-white">{service.name}</span>
+              <div className="min-w-0">
+                <span className="text-base text-white">{service.name}</span>
+                {service.note && <p className="text-xs italic text-white/70">({service.note})</p>}
+              </div>
               <span className="shrink-0 text-right text-base font-semibold tabular-nums text-white">
                 {service.priceLabel}
               </span>
             </li>
           ))}
         </ul>
-        {category.notePosition !== "top" && note}
       </div>
     </div>
   );
