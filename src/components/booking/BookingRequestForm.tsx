@@ -16,12 +16,36 @@ interface BookingResponse {
   errors?: Record<string, string>;
 }
 
+/** Digits only, auto-inserting "/" -> "dd/mm/yyyy". */
+function maskDate(raw: string) {
+  const d = raw.replace(/\D/g, "").slice(0, 8);
+  if (d.length <= 2) return d;
+  return d.length <= 4 ? `${d.slice(0, 2)}/${d.slice(2)}` : `${d.slice(0, 2)}/${d.slice(2, 4)}/${d.slice(4)}`;
+}
+
+/** "dd/mm/yyyy" -> "yyyy-mm-dd", or null when it is not a real calendar date. */
+function toIsoDate(text: string) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(text);
+  if (!m) return null;
+  const [, dd, mm, yyyy] = m;
+  const probe = new Date(Date.UTC(Number(yyyy), Number(mm) - 1, Number(dd)));
+  const valid = probe.getUTCFullYear() === Number(yyyy) && probe.getUTCMonth() === Number(mm) - 1 && probe.getUTCDate() === Number(dd);
+  return valid ? `${yyyy}-${mm}-${dd}` : null;
+}
+
+function toDisplayDate(iso: string) {
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y}`;
+}
+
 function noopSubscribe() {
   return () => {};
 }
 
 export default function BookingRequestForm() {
   const [date, setDate] = useState("");
+  const [dateText, setDateText] = useState("");
+  const nativeDateRef = useRef<HTMLInputElement>(null);
   const [time, setTime] = useState("");
   const [timeOptions, setTimeOptions] = useState<string[]>([]);
   const [name, setName] = useState("");
@@ -51,6 +75,39 @@ export default function BookingRequestForm() {
     setDate(value);
     setTime("");
     setTimeOptions(value ? getTimeOptions(value, Date.now()) : []);
+  }
+
+  function handleDateText(raw: string) {
+    const text = maskDate(raw);
+    setDateText(text);
+    if (text.length < 10) {
+      if (date) handleDateChange("");
+      setFieldErrors((prev) => ({ ...prev, preferredDate: "" }));
+      return;
+    }
+    const iso = toIsoDate(text);
+    const inRange = iso !== null && (!today || (iso >= today && (!maxDate || iso <= maxDate)));
+    if (!iso || !inRange) {
+      handleDateChange("");
+      setFieldErrors((prev) => ({ ...prev, preferredDate: "Ngày không hợp lệ hoặc ngoài thời gian có thể đặt lịch." }));
+      return;
+    }
+    setFieldErrors((prev) => ({ ...prev, preferredDate: "" }));
+    handleDateChange(iso);
+  }
+
+  function handleNativeDate(iso: string) {
+    setDateText(iso ? toDisplayDate(iso) : "");
+    setFieldErrors((prev) => ({ ...prev, preferredDate: "" }));
+    handleDateChange(iso);
+  }
+
+  function openCalendar() {
+    try {
+      nativeDateRef.current?.showPicker();
+    } catch {
+      nativeDateRef.current?.focus();
+    }
   }
 
   function validateLocally(): Record<string, string> {
@@ -112,8 +169,11 @@ export default function BookingRequestForm() {
     requestIdRef.current = null;
     setBookingId(null);
     setDate("");
+    setDateText("");
     setTime("");
     setTimeOptions([]);
+    setName("");
+    setPhone("");
     setNotes("");
     setFieldErrors({});
     setError(null);
@@ -162,14 +222,40 @@ export default function BookingRequestForm() {
             </p>
 
             <Field label="Ngày hẹn mong muốn">
-              <input
-                type="date"
-                value={date}
-                min={today || undefined}
-                max={maxDate}
-                onChange={(e) => handleDateChange(e.target.value)}
-                className={inputClass}
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  placeholder="Ngày/tháng/năm"
+                  maxLength={10}
+                  value={dateText}
+                  onChange={(e) => handleDateText(e.target.value)}
+                  className={`${inputClass} pr-12`}
+                />
+                <button
+                  type="button"
+                  onClick={openCalendar}
+                  aria-label="Mở lịch chọn ngày"
+                  className="absolute right-0.5 top-1/2 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-muted transition-colors hover:text-accent"
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M3 10h18M8 3v4M16 3v4" />
+                  </svg>
+                </button>
+                <input
+                  ref={nativeDateRef}
+                  type="date"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  value={date}
+                  min={today || undefined}
+                  max={maxDate}
+                  onChange={(e) => handleNativeDate(e.target.value)}
+                  className="pointer-events-none absolute bottom-0 right-0 h-0 w-0 opacity-0"
+                />
+              </div>
               {fieldErrors.preferredDate && <span className="mt-1 block text-sm text-danger">{fieldErrors.preferredDate}</span>}
             </Field>
 
@@ -263,7 +349,7 @@ export default function BookingRequestForm() {
               {isSubmitting ? "Đang gửi yêu cầu..." : "Gửi yêu cầu đặt lịch"}
             </button>
             <p className="text-center text-xs text-muted">
-              Đây là yêu cầu đặt lịch — lịch hẹn chỉ được xác nhận sau khi tiệm gọi điện cho bạn.
+              Đây là yêu cầu đặt lịch và lịch hẹn chỉ được xác nhận sau khi tiệm gọi điện cho bạn.
             </p>
           </form>
         )}
