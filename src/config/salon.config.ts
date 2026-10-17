@@ -16,7 +16,7 @@ export const salonInfo = {
   openingHoursText: process.env.NEXT_PUBLIC_SALON_HOURS ?? "",
   facebookUrl: "https://www.facebook.com/inwy.nd00",
   instagramUrl: "https://www.instagram.com/2in.corner/",
-  tiktokUrl: "",
+  tiktokUrl: "https://www.tiktok.com/@2in.corner",
   zaloUrl: process.env.NEXT_PUBLIC_ZALO_URL ?? "",
   mapUrl: process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ?? "",
 };
