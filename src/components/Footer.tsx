@@ -28,22 +28,22 @@ export default function Footer() {
   ).filter((l) => l.href);
 
   return (
-    <footer className="mt-8 border-t border-rose-100 bg-white">
+    <footer className="mt-8 border-t border-line bg-surface">
       <div className="mx-auto grid max-w-5xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6">
         <div>
-          <p className="font-display text-2xl font-semibold text-rose-700">2IN.CORNER</p>
-          <p className="mt-2 max-w-xs text-sm text-zinc-600">
+          <p className="brand-font text-2xl text-accent">2IN.CORNER</p>
+          <p className="mt-2 max-w-xs text-sm text-muted">
             Một góc nhỏ dịu dàng để bạn thư giãn và có bộ móng xinh. Đặt lịch nhanh, chăm sóc tận tâm.
           </p>
         </div>
-        <div className="text-sm text-zinc-600 sm:text-right">
+        <div className="text-sm text-muted sm:text-right">
           <nav aria-label="Liên kết chân trang" className="flex flex-wrap gap-x-5 gap-y-1 sm:justify-end">
-            <Link href="/#services" className="py-2 hover:text-rose-700">Dịch vụ</Link>
-            <Link href="/#booking" className="py-2 hover:text-rose-700">Đặt lịch</Link>
+            <Link href="/#services" className="py-2 hover:text-accent">Dịch vụ</Link>
+            <Link href="/#booking" className="py-2 hover:text-accent">Đặt lịch</Link>
             {galleryItems.length > 0 && (
-              <Link href="/gallery" className="py-2 hover:text-rose-700">Thư viện</Link>
+              <Link href="/gallery" className="py-2 hover:text-accent">Thư viện</Link>
             )}
-            <Link href="/#contact" className="py-2 hover:text-rose-700">Liên hệ</Link>
+            <Link href="/#contact" className="py-2 hover:text-accent">Liên hệ</Link>
           </nav>
           {links.length > 0 && (
             <ul aria-label="Kết nối với 2IN.CORNER" className="mt-4 flex flex-wrap justify-center gap-3 sm:justify-end">
@@ -54,7 +54,7 @@ export default function Footer() {
                     {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     aria-label={l.ariaLabel}
                     title={l.ariaLabel}
-                    className={`flex h-11 w-11 items-center justify-center rounded-full border border-rose-200 bg-white text-rose-700 transition-colors duration-200 hover:border-transparent hover:text-white focus-visible:ring-2 focus-visible:ring-rose-300 ${l.hover}`}
+                    className={`flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-accent transition-colors duration-200 hover:border-transparent hover:text-white focus-visible:ring-2 focus-visible:ring-rose-300 ${l.hover}`}
                   >
                     {l.icon === "phone" ? <PhoneIcon className="h-5 w-5" /> : <SocialIcon name={l.icon} className="h-5 w-5" />}
                   </a>
@@ -64,7 +64,7 @@ export default function Footer() {
           )}
         </div>
       </div>
-      <p className="border-t border-rose-50 py-4 text-center text-xs text-zinc-500">
+      <p className="border-t border-line py-4 text-center text-xs text-muted">
         © {new Date().getFullYear()} 2IN.CORNER. Bảo lưu mọi quyền.
       </p>
     </footer>

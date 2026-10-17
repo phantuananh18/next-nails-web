@@ -15,14 +15,14 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl text-ink sm:text-4xl">Thư viện cảm hứng</h1>
-      <p className="mt-2 text-zinc-600">Tham khảo các mẫu nail tại 2IN.CORNER.</p>
+      <p className="mt-2 text-muted">Tham khảo các mẫu nail tại 2IN.CORNER.</p>
 
       {styles.length > 0 && (
         <div className="mt-6 flex flex-wrap gap-2">
           <Link
             href="/gallery"
             className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium ${
-              !style ? "bg-rose-600 text-white" : "border border-rose-200 text-zinc-700 hover:bg-rose-50"
+              !style ? "bg-rose-600 text-white" : "border border-line text-muted hover:bg-page-alt"
             }`}
           >
             Tất cả
@@ -32,7 +32,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
               key={s}
               href={`/gallery?style=${encodeURIComponent(s)}`}
               className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium ${
-                style === s ? "bg-rose-600 text-white" : "border border-rose-200 text-zinc-700 hover:bg-rose-50"
+                style === s ? "bg-rose-600 text-white" : "border border-line text-muted hover:bg-page-alt"
               }`}
             >
               {s}
@@ -43,7 +43,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
 
       <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item) => (
-          <li key={item.id} className="overflow-hidden rounded-3xl border border-rose-100 bg-white shadow-sm shadow-rose-100">
+          <li key={item.id} className="overflow-hidden rounded-3xl border border-line bg-surface shadow-sm shadow-black/5">
             {/* eslint-disable-next-line @next/next/no-img-element -- owner-supplied image URLs */}
             <img
               src={item.imageUrl}
@@ -51,7 +51,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
               loading="lazy"
               className="aspect-square w-full object-cover"
             />
-            {item.title && <p className="p-3 text-sm text-zinc-700">{item.title}</p>}
+            {item.title && <p className="p-3 text-sm text-muted">{item.title}</p>}
           </li>
         ))}
       </ul>

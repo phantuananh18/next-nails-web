@@ -60,7 +60,7 @@ export default function ContactButtons({ className = "" }: { className?: string 
         <a
           href={tel}
           aria-label={`Gọi điện đặt lịch ${salonInfo.phone}`}
-          className={`${base} border border-rose-300 bg-white text-rose-700 hover:bg-rose-50`}
+          className={`${base} border border-rose-300 bg-surface text-accent hover:bg-page-alt`}
         >
           <PhoneIcon />
           Gọi điện đặt lịch

@@ -8,6 +8,14 @@ A mobile-first landing page for the **2IN.CORNER** nail salon. Customers pick a 
 
 > Developer/AI-assistant rules live in [`CLAUDE.md`](CLAUDE.md).
 
+## Theme and brand font
+
+- Light/Dark toggle in the navbar. Persistence: `localStorage["theme"]` (`light`/`dark`); with no saved choice the system colour scheme is used. An inline script in `src/app/layout.tsx` applies the `dark` class before first paint (no flash, no hydration mismatch).
+- Grayscale tokens (`src/app/globals.css`) — Light: page `#e5e5e5`, secondary `#f5f5f5`, surface `#ffffff`, text `#222222`/`#555555`, border `#d4d4d4`. Dark: page `#242424`, secondary `#303030`, surface `#383838`, text `#f5f5f5`/`#c4c4c4`, border `#525252`.
+- COMBO SALE (`comboSale` in `src/config/services.ts`) is a promotional category with display-only prices for customers who book in advance; its link just scrolls to the request form and the owner confirms manually.
+- The Services price menu is always black and white (marble background), independent of the theme.
+- Bitcount Ink (`next/font/google`) is applied only to the brand name "2IN.CORNER" through the `.brand-font` class.
+
 ## Features
 
 | Feature | Status | Where |

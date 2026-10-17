@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ThemeToggle from "@/components/ThemeToggle";
 import { galleryItems } from "@/config/gallery";
 
 // Guest MVP: no accounts or backend API. The gallery link only appears once real gallery photos are configured.
@@ -24,18 +25,18 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-30 px-3 pt-3 sm:px-6">
-      <div className="mx-auto max-w-5xl rounded-full border border-rose-100 bg-white/85 shadow-sm shadow-rose-100/60 backdrop-blur">
+      <div className="mx-auto max-w-5xl rounded-full border border-line bg-surface/85 shadow-sm shadow-black/5 backdrop-blur">
         <div className="flex items-center justify-between px-4 py-2 sm:px-6">
-          <Link href="/" className="font-display text-2xl font-semibold tracking-wide text-rose-700">
+          <Link href="/" className="brand-font text-2xl tracking-wide text-accent">
             2IN.CORNER
           </Link>
 
-          <nav aria-label="Điều hướng chính" className="hidden items-center gap-1 text-sm font-medium text-zinc-600 md:flex">
+          <nav aria-label="Điều hướng chính" className="hidden items-center gap-1 text-sm font-medium text-muted md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-full px-4 py-2 transition-colors hover:bg-rose-50 hover:text-rose-700"
+                className="rounded-full px-4 py-2 transition-colors hover:bg-page-alt hover:text-accent"
               >
                 {link.label}
               </Link>
@@ -48,9 +49,11 @@ export default function Header() {
             </Link>
           </nav>
 
+          <div className="flex items-center gap-1">
+          <ThemeToggle />
           <button
             type="button"
-            className="-mr-2 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-zinc-700 hover:bg-rose-50 md:hidden"
+            className="-mr-2 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-page-alt md:hidden"
             aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
@@ -60,16 +63,17 @@ export default function Header() {
               {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
             </svg>
           </button>
+          </div>
         </div>
 
         {menuOpen && (
-          <nav id="mobile-nav" aria-label="Điều hướng di động" className="flex flex-col gap-1 border-t border-rose-100 px-3 py-3 md:hidden">
+          <nav id="mobile-nav" aria-label="Điều hướng di động" className="flex flex-col gap-1 border-t border-line px-3 py-3 md:hidden">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-4 py-3 text-base font-medium text-zinc-700 hover:bg-rose-50"
+                className="rounded-xl px-4 py-3 text-base font-medium text-muted hover:bg-page-alt"
               >
                 {link.label}
               </Link>

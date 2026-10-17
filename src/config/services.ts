@@ -47,7 +47,7 @@ export const serviceCategories: ServiceCategory[] = [
       { name: "Đắp Gel", priceLabel: "200-300K" },
       { name: "Úp móng Gel X", priceLabel: "120K" },
       { name: "Refill Gel", priceLabel: "150K" },
-      { name: "Cứng móng móng", priceLabel: "40K" },
+      { name: "Cứng móng mỏng", priceLabel: "40K" },
       { name: "Cứng móng tạo cầu", priceLabel: "80-150K" },
       { name: "Claw Nails", priceLabel: "400-700K" },
     ],
@@ -73,3 +73,36 @@ export const serviceCategories: ServiceCategory[] = [
 export const discountNotice = "Giảm 10% đối với HSSV có mang thẻ và khách hàng trong tháng sinh nhật.";
 
 export const warrantyNotice = "Bảo hành sản phẩm trong 7 ngày";
+
+export interface ComboGroup {
+  id: string;
+  items: ServiceItem[];
+  note?: string;
+}
+
+/** Promotional combos (display-only prices). Valid for customers who book in advance; the owner confirms manually. */
+export const comboSale: { title: string; groups: ComboGroup[]; condition: string; ctaLabel: string } = {
+  title: "COMBO SALE",
+  groups: [
+    {
+      id: "cleaning-gel",
+      items: [
+        { name: "Sạch da + sơn gel", priceLabel: "109K" },
+        { name: "Sạch da + sơn thạch", priceLabel: "119K" },
+        { name: "Sạch da + mắt mèo", priceLabel: "169K" },
+      ],
+      note: "(Đã có lớp nền)",
+    },
+    {
+      id: "extensions-gel",
+      items: [
+        { name: "Úp móng gel + sơn gel", priceLabel: "199K" },
+        { name: "Úp móng gel + sơn thạch", priceLabel: "209K" },
+        { name: "Úp móng gel + mắt mèo", priceLabel: "259K" },
+      ],
+      note: "(Đã có lớp nền)",
+    },
+  ],
+  condition: "Áp dụng cho khách đặt lịch trước",
+  ctaLabel: "Đặt lịch trước để nhận ưu đãi",
+};

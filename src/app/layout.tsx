@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Be_Vietnam_Pro, Cormorant_Garamond } from "next/font/google";
+import { Be_Vietnam_Pro, Bitcount_Ink, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import TopInfoBar from "@/components/TopInfoBar";
@@ -22,21 +22,41 @@ const display = Cormorant_Garamond({
   display: "swap",
 });
 
+// Brand name only ("2IN.CORNER", .brand-font). One static weight, latin subset: the brand has no diacritics.
+const brand = Bitcount_Ink({
+  variable: "--font-bitcount-ink",
+  subsets: ["latin"],
+  weight: "600",
+  display: "swap",
+  adjustFontFallback: false, // no fallback metrics published for this font
+});
+
+// Runs before first paint: saved choice wins, otherwise follow the system colour scheme.
+const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d)document.documentElement.classList.add("dark")}catch(e){}})()`;
+
 export const metadata: Metadata = {
   title: "Đặt lịch làm nails ở Tân Bình, TP.HCM · 2IN.CORNER",
   description: "Đặt lịch làm nail nhanh chóng: chọn ngày giờ mong muốn, tiệm sẽ gọi tư vấn và xác nhận cho bạn.",
 };
 
-export const viewport: Viewport = { themeColor: "#fffaf7" };
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#e5e5e5" },
+    { media: "(prefers-color-scheme: dark)", color: "#242424" },
+  ],
+};
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const { zalo, tel } = getContactLinks();
   return (
-    <html lang="vi" className={`${body.variable} ${display.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-cream text-ink">
+    <html lang="vi" suppressHydrationWarning className={`${body.variable} ${display.variable} ${brand.variable} h-full antialiased`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="flex min-h-full flex-col bg-page text-ink">
         <a
           href="#main"
-          className="sr-only z-50 rounded-full bg-white px-4 py-2 text-sm font-semibold text-rose-700 focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          className="sr-only z-50 rounded-full bg-surface px-4 py-2 text-sm font-semibold text-accent focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Bỏ qua điều hướng
         </a>

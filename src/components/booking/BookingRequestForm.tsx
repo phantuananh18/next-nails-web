@@ -120,22 +120,22 @@ export default function BookingRequestForm() {
   }
 
   return (
-    <section id="booking" className="scroll-mt-24 bg-lavender-50 px-4 py-16 sm:px-6">
-      <div className="mx-auto max-w-2xl rounded-4xl bg-white p-6 shadow-lg shadow-lavender-300/30 sm:p-10">
+    <section id="booking" className="scroll-mt-24 bg-page-alt px-4 py-16 sm:px-6">
+      <div className="mx-auto max-w-2xl rounded-4xl bg-surface p-6 shadow-lg shadow-black/5 sm:p-10">
         <h2 className="text-3xl text-ink sm:text-4xl">Đặt lịch</h2>
 
         {hasDirectContact && (
-          <div className="mt-6 rounded-3xl bg-lavender-50 p-5">
+          <div className="mt-6 rounded-3xl bg-page-alt p-5">
             <p className="text-sm font-medium text-ink">Bạn muốn đặt lịch nhanh? Liên hệ trực tiếp với tiệm:</p>
             <ContactButtons className="mt-3" />
-            <p className="mt-3 text-xs text-zinc-600">
+            <p className="mt-3 text-xs text-muted">
               Đặt qua Zalo hoặc điện thoại sẽ được tiệm trao đổi trực tiếp với bạn. Hoặc gửi yêu cầu trực tuyến bên dưới.
             </p>
           </div>
         )}
 
         {bookingId ? (
-          <div role="status" className="mt-6 rounded-3xl border border-sage-100 bg-sage-50 p-6 text-sage-700">
+          <div role="status" className="mt-6 rounded-3xl border border-success-line bg-success-bg p-6 text-success-fg">
             <h3 className="text-lg font-semibold">Đã gửi yêu cầu đặt lịch thành công!</h3>
             <p className="mt-3 text-sm">
               Mã yêu cầu: <span className="font-mono font-semibold">{bookingId}</span>
@@ -150,14 +150,14 @@ export default function BookingRequestForm() {
             <button
               type="button"
               onClick={reset}
-              className="mt-5 min-h-11 cursor-pointer rounded-full border border-sage-700 px-5 text-sm font-semibold text-sage-700 hover:bg-sage-100"
+              className="mt-5 min-h-11 cursor-pointer rounded-full border border-success-fg px-5 text-sm font-semibold text-success-fg hover:bg-success-line"
             >
               Gửi yêu cầu khác
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-6">
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm text-muted">
               Chọn ngày và giờ bạn mong muốn. Tiệm sẽ gọi điện tư vấn dịch vụ và xác nhận lịch hẹn cho bạn.
             </p>
 
@@ -170,15 +170,15 @@ export default function BookingRequestForm() {
                 onChange={(e) => handleDateChange(e.target.value)}
                 className={inputClass}
               />
-              {fieldErrors.preferredDate && <span className="mt-1 block text-sm text-red-600">{fieldErrors.preferredDate}</span>}
+              {fieldErrors.preferredDate && <span className="mt-1 block text-sm text-danger">{fieldErrors.preferredDate}</span>}
             </Field>
 
             <div>
-              <span className="mb-1.5 block text-sm font-medium text-zinc-700">Giờ hẹn mong muốn</span>
+              <span className="mb-1.5 block text-sm font-medium text-muted">Giờ hẹn mong muốn</span>
               {!date ? (
-                <p className="text-sm text-zinc-600">Chọn ngày để xem các khung giờ.</p>
+                <p className="text-sm text-muted">Chọn ngày để xem các khung giờ.</p>
               ) : timeOptions.length === 0 ? (
-                <p className="text-sm text-zinc-600">Không còn khung giờ trong ngày này. Vui lòng chọn ngày khác.</p>
+                <p className="text-sm text-muted">Không còn khung giờ trong ngày này. Vui lòng chọn ngày khác.</p>
               ) : (
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                   {timeOptions.map((option) => (
@@ -193,7 +193,7 @@ export default function BookingRequestForm() {
                       className={`min-h-11 cursor-pointer rounded-xl border py-2 text-sm font-medium transition-colors duration-200 ${
                         time === option
                           ? "border-rose-600 bg-rose-600 text-white"
-                          : "border-rose-200 text-zinc-700 hover:border-rose-400 hover:bg-rose-50"
+                          : "border-line text-muted hover:border-rose-400 hover:bg-page-alt"
                       }`}
                     >
                       {option}
@@ -201,7 +201,7 @@ export default function BookingRequestForm() {
                   ))}
                 </div>
               )}
-              {fieldErrors.preferredTime && <span className="mt-1 block text-sm text-red-600">{fieldErrors.preferredTime}</span>}
+              {fieldErrors.preferredTime && <span className="mt-1 block text-sm text-danger">{fieldErrors.preferredTime}</span>}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -217,7 +217,7 @@ export default function BookingRequestForm() {
                   }}
                   className={inputClass}
                 />
-                {fieldErrors.customerName && <span className="mt-1 block text-sm text-red-600">{fieldErrors.customerName}</span>}
+                {fieldErrors.customerName && <span className="mt-1 block text-sm text-danger">{fieldErrors.customerName}</span>}
               </Field>
               <Field label="Số điện thoại">
                 <input
@@ -231,7 +231,7 @@ export default function BookingRequestForm() {
                   }}
                   className={inputClass}
                 />
-                {fieldErrors.phoneNumber && <span className="mt-1 block text-sm text-red-600">{fieldErrors.phoneNumber}</span>}
+                {fieldErrors.phoneNumber && <span className="mt-1 block text-sm text-danger">{fieldErrors.phoneNumber}</span>}
               </Field>
             </div>
 
@@ -250,7 +250,7 @@ export default function BookingRequestForm() {
             </Field>
 
             {error && (
-              <p role="alert" className="text-sm text-red-600">
+              <p role="alert" className="text-sm text-danger">
                 {error}
               </p>
             )}
@@ -262,7 +262,7 @@ export default function BookingRequestForm() {
             >
               {isSubmitting ? "Đang gửi yêu cầu..." : "Gửi yêu cầu đặt lịch"}
             </button>
-            <p className="text-center text-xs text-zinc-600">
+            <p className="text-center text-xs text-muted">
               Đây là yêu cầu đặt lịch — lịch hẹn chỉ được xác nhận sau khi tiệm gọi điện cho bạn.
             </p>
           </form>

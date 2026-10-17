@@ -17,8 +17,8 @@
   --color-rose-800: #6d3044;
   --color-rose-900: #4b212f;
 
-  --color-cream: #fffaf7;
-  --color-ink: #3b2f33;
+  --color-menu-cream: #fffaf7;
+  --color-menu-ink: #3b2f33;
   --color-lavender-50: #f6f3fb;
   --color-lavender-100: #ebe5f6;
   --color-lavender-300: #c9bde6;
@@ -30,16 +30,74 @@
   --font-display: var(--font-display), ui-serif, Georgia, serif;
 }
 
+/*
+ * Light/Dark grayscale tokens. The `dark` class is set on <html> by the inline script in layout.tsx.
+ * The services menu (.marble-bg) uses fixed black/white colours and ignores these tokens.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --page-background: #e5e5e5;
+  --page-alt: #f5f5f5;
+  --surface-background: #ffffff;
+  --text-primary: #222222;
+  --text-secondary: #555555;
+  --border-color: #d4d4d4;
+  --accent-text: #8c3d55;
+  --danger-text: #c62828;
+  --success-bg: #f3f8f4;
+  --success-line: #cfe3d6;
+  --success-text: #3f6650;
+}
+
+.dark {
+  --page-background: #242424;
+  --page-alt: #303030;
+  --surface-background: #383838;
+  --text-primary: #f5f5f5;
+  --text-secondary: #c4c4c4;
+  --border-color: #525252;
+  --accent-text: #f0b9c6;
+  --danger-text: #fca5a5;
+  --success-bg: #2f3a33;
+  --success-line: #4b5d51;
+  --success-text: #bfe0cb;
+}
+
+@theme inline {
+  --color-page: var(--page-background);
+  --color-page-alt: var(--page-alt);
+  --color-surface: var(--surface-background);
+  --color-ink: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-line: var(--border-color);
+  --color-accent: var(--accent-text);
+  --color-danger: var(--danger-text);
+  --color-success-bg: var(--success-bg);
+  --color-success-line: var(--success-line);
+  --color-success-fg: var(--success-text);
+}
+
 html {
   scroll-behavior: smooth;
   color-scheme: light;
 }
 
+html.dark {
+  color-scheme: dark;
+}
+
 body {
-  background: var(--color-cream);
-  color: var(--color-ink);
+  background: var(--page-background);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.65;
+}
+
+/* Salon brand name only ("2IN.CORNER"); no other text may use this font. */
+.brand-font {
+  font-family: var(--font-bitcount-ink), ui-monospace, monospace;
+  font-weight: 600;
 }
 
 h1,
@@ -58,6 +116,12 @@ h3 {
 
 ::selection {
   background: var(--color-rose-200);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

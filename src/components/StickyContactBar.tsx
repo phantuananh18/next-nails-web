@@ -38,9 +38,9 @@ export default function StickyContactBar({ zaloHref, telHref }: Props) {
         }`}
         inert={formVisible}
       >
-        <div className="mx-auto flex max-w-md gap-2 rounded-full border border-rose-100 bg-white/95 p-2 shadow-lg shadow-rose-200/60 backdrop-blur">
+        <div className="mx-auto flex max-w-md gap-2 rounded-full border border-line bg-surface/95 p-2 shadow-lg shadow-black/10 backdrop-blur">
           {telHref && (
-            <a href={telHref} className={`${item} text-rose-700 hover:bg-rose-50`}>
+            <a href={telHref} className={`${item} text-accent hover:bg-page-alt`}>
               <PhoneIcon className="h-5 w-5" />
               Gọi điện
             </a>
