@@ -1,6 +1,6 @@
 export interface ServiceItem {
   name: string;
-  /** Display-only text (e.g. "110K", "200–300K", "10K/1 NGÓN"); never parsed or summed. */
+  /** Display-only text (e.g. "110K", "200-300K", "10K/1 NGÓN"); never parsed or summed. */
   priceLabel: string;
 }
 
@@ -28,6 +28,7 @@ export const serviceCategories: ServiceCategory[] = [
       { name: "Sơn Gel mắt mèo", priceLabel: "150K" },
     ],
     note: "(Đã bao gồm nền)",
+    notePosition: "top"
   },
   {
     id: "nail-care",
@@ -43,26 +44,28 @@ export const serviceCategories: ServiceCategory[] = [
     id: "extensions",
     title: "EXTENSIONS",
     services: [
-      { name: "Đắp Gel", priceLabel: "200–300K" },
+      { name: "Đắp Gel", priceLabel: "200-300K" },
       { name: "Úp móng Gel X", priceLabel: "120K" },
       { name: "Refill Gel", priceLabel: "150K" },
       { name: "Cứng móng móng", priceLabel: "40K" },
-      { name: "Cứng móng tạo cầu", priceLabel: "80–150K" },
-      { name: "Claw Nails", priceLabel: "400–700K" },
+      { name: "Cứng móng tạo cầu", priceLabel: "80-150K" },
+      { name: "Claw Nails", priceLabel: "400-700K" },
     ],
+    note: "(Ngắn/Dài)",
+    notePosition: "top"
   },
   {
     id: "designs",
     title: "DESIGNS",
     services: [
       { name: "Tráng gương", priceLabel: "15K/1 NGÓN" },
-      { name: "Ombre", priceLabel: "10–15K" },
-      { name: "Air Brush", priceLabel: "15–20K" },
-      { name: "Gel nổi", priceLabel: "15–60K" },
-      { name: "Loang màu", priceLabel: "15–30K" },
-      { name: "Ẩn phụ kiện, Foil", priceLabel: "10–30K" },
-      { name: "Đính đá/Charm", priceLabel: "3–70K" },
-      { name: "Vẽ", priceLabel: "10–200K" },
+      { name: "Ombre", priceLabel: "10-15K" },
+      { name: "Air Brush", priceLabel: "15-20K" },
+      { name: "Gel nổi", priceLabel: "15-60K" },
+      { name: "Loang màu", priceLabel: "15-30K" },
+      { name: "Ẩn phụ kiện, Foil", priceLabel: "10-30K" },
+      { name: "Đính đá/Charm", priceLabel: "3-70K" },
+      { name: "Vẽ", priceLabel: "10-200K" },
     ],
   },
 ];
