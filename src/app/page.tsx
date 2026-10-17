@@ -65,12 +65,6 @@ export default function HomePage() {
         </ol>
       </section>
 
-      <ServicesSection />
-
-      <BookingRequestForm />
-
-      <BeforeAfter />
-
       {featuredGallery.length > 0 && (
         <section id="gallery" className="mx-auto max-w-5xl scroll-mt-24 px-4 py-16 sm:px-6">
           <div className="flex items-baseline justify-between gap-4">
@@ -94,6 +88,12 @@ export default function HomePage() {
           </ul>
         </section>
       )}
+
+      <ServicesSection />
+
+      <BookingRequestForm />
+
+      <BeforeAfter />
 
       <Testimonials />
 
