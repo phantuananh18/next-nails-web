@@ -12,7 +12,7 @@ function CategoryHeading({ children }: { children: string }) {
 function ComboSale() {
   return (
     <div className="mx-auto mb-12 max-w-2xl">
-      <h3 className="text-center font-display text-4xl font-bold tracking-[0.1em] text-white sm:text-5xl">{comboSale.title}</h3>
+      <h3 className="text-center font-display text-4xl font-bold tracking-widest text-white sm:text-5xl">{comboSale.title}</h3>
       <div className="mt-5 rounded-3xl border border-white/20 bg-white/10 px-5 py-6 backdrop-blur-sm sm:px-8">
         {comboSale.groups.map((group, i) => (
           <div key={group.id}>
