@@ -233,6 +233,7 @@ Defined in `env.example` (copy to `.env.local`; `.env*` files are git-ignored).
 | `NEXT_PUBLIC_SALON_ADDRESS` | Salon address (top bar, contact section) | Optional | `<street, ward, city>` |
 | `NEXT_PUBLIC_SALON_HOURS` | Opening hours as display text (top bar, contact section; no open/closed logic) | Optional | `<e.g. Thứ 2 – CN, 9:00 – 18:30>` |
 | `NEXT_PUBLIC_GOOGLE_MAPS_URL` | Link to the salon on Google Maps (must be `https://`); makes the address clickable | Optional | `https://maps.app.goo.gl/<id>` |
+| `NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL` | Google Maps **Embed** URL for the map beside the contact info. Get it from Google Maps -> Share -> Embed a map -> copy only the `src` value of the iframe (`https://www.google.com/maps/embed?...`). A normal share link (`maps.app.goo.gl`) is not valid here. On Vercel: Project -> Settings -> Environment Variables, then redeploy. If missing or invalid, the map is replaced by a placeholder with the "Mở Google Maps" link (needs `NEXT_PUBLIC_GOOGLE_MAPS_URL`); with neither, the map panel is hidden. | Optional | `https://www.google.com/maps/embed?pb=...` |
 | `NEXT_PUBLIC_ZALO_URL` | Official Zalo link from the owner (must be `https://`) | Optional – hides the Zalo button if empty | `https://zalo.me/<phone-or-id>` |
 
 Never prefix the Google variables with `NEXT_PUBLIC_`. The two contact variables are public by nature and are inlined at build time, so redeploy after changing them. Without them `POST /api/bookings` responds `503` while the page still renders.

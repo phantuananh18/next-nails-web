@@ -8,6 +8,7 @@
  *   NEXT_PUBLIC_ZALO_URL     official Zalo link from the owner, e.g. "https://zalo.me/<phone-or-id>"
  *   NEXT_PUBLIC_SALON_ADDRESS, NEXT_PUBLIC_SALON_HOURS (display text only, no open/closed logic),
  *   NEXT_PUBLIC_GOOGLE_MAPS_URL (https link to the salon's Google Maps place)
+ *   NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL (iframe src from Google Maps -> Share -> Embed a map)
  */
 export const salonInfo = {
   name: "2IN.CORNER",
@@ -19,4 +20,5 @@ export const salonInfo = {
   tiktokUrl: "https://www.tiktok.com/@2in.corner",
   zaloUrl: process.env.NEXT_PUBLIC_ZALO_URL ?? "",
   mapUrl: process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ?? "",
+  mapEmbedUrl: process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ?? "",
 };

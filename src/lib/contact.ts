@@ -17,3 +17,12 @@ export function getHttpsHref(url: string): string | null {
 }
 
 export const getZaloHref = getHttpsHref;
+
+/** Accepts only Google Maps Embed URLs (iframe src from Share -> Embed a map); anything else returns null. */
+export function getMapEmbedHref(url: string): string | null {
+  const href = getHttpsHref(url);
+  if (!href) return null;
+  const { hostname, pathname } = new URL(href);
+  const isGoogle = hostname === "www.google.com" || hostname === "maps.google.com";
+  return isGoogle && pathname.startsWith("/maps/embed") ? href : null;
+}

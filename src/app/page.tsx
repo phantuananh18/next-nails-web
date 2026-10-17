@@ -1,11 +1,13 @@
 import Link from "next/link";
 import BeforeAfter from "@/components/BeforeAfter";
 import ContactButtons from "@/components/ContactButtons";
+import ContactInfo from "@/components/ContactInfo";
+import ContactMap from "@/components/ContactMap";
 import BookingRequestForm from "@/components/booking/BookingRequestForm";
 import ServicesSection from "@/components/ServicesSection";
 import Testimonials from "@/components/Testimonials";
 import { salonInfo } from "@/config/salon.config";
-import { getTelHref } from "@/lib/contact";
+import { getHttpsHref, getMapEmbedHref } from "@/lib/contact";
 import { galleryItems } from "@/config/gallery";
 
 const steps = [
@@ -19,7 +21,9 @@ export default function HomePage() {
   const featured = galleryItems.filter((g) => g.isFeatured);
   const featuredGallery = (featured.length > 0 ? featured : galleryItems).slice(0, 8);
 
-  const telHref = salonInfo.phone ? getTelHref(salonInfo.phone) : null;
+  const mapHref = getHttpsHref(salonInfo.mapUrl);
+  const mapEmbedHref = getMapEmbedHref(salonInfo.mapEmbedUrl);
+  const hasMap = Boolean(mapHref || mapEmbedHref);
 
   return (
     <div>
@@ -98,40 +102,11 @@ export default function HomePage() {
       <Testimonials />
 
       <section id="contact" className="scroll-mt-24 px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-5xl rounded-4xl bg-success-bg p-8 dark:border dark:border-[#d4d4d4] dark:bg-white sm:p-12">
-          <h2 className="text-3xl text-ink dark:text-[#222222] sm:text-4xl">Liên hệ</h2>
-          <dl className="mt-6 space-y-4 text-base text-muted dark:text-[#555555]">
-            {salonInfo.address && (
-              <div>
-                <dt className="font-semibold text-ink dark:text-[#222222]">Địa chỉ</dt>
-                <dd>
-                  {salonInfo.mapUrl ? (
-                    <a href={salonInfo.mapUrl} className="text-accent underline-offset-2 hover:underline dark:text-[#8c3d55]" target="_blank" rel="noreferrer">
-                      {salonInfo.address}
-                    </a>
-                  ) : (
-                    salonInfo.address
-                  )}
-                </dd>
-              </div>
-            )}
-            {salonInfo.phone && (
-              <div>
-                <dt className="font-semibold text-ink dark:text-[#222222]">Điện thoại</dt>
-                <dd>
-                  <a href={telHref ?? undefined} className="text-accent underline-offset-2 hover:underline dark:text-[#8c3d55]">
-                    {salonInfo.phone}
-                  </a>
-                </dd>
-              </div>
-            )}
-            {salonInfo.openingHoursText && (
-              <div>
-                <dt className="font-semibold text-ink dark:text-[#222222]">Giờ mở cửa</dt>
-                <dd>{salonInfo.openingHoursText}</dd>
-              </div>
-            )}
-          </dl>
+        <div className="mx-auto max-w-5xl rounded-4xl bg-success-bg p-6 dark:border dark:border-[#d4d4d4] dark:bg-white sm:p-12">
+          <div className={`grid items-start gap-8 ${hasMap ? "lg:grid-cols-[9fr_11fr] lg:gap-12" : ""}`}>
+            <ContactInfo />
+            {hasMap && <ContactMap embedHref={mapEmbedHref} mapHref={mapHref} />}
+          </div>
         </div>
       </section>
     </div>
