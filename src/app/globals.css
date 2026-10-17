@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
 /*
- * 2IN.CORNER — "serene studio" design system
- * Soft blush / lavender / sage pastels on warm cream. The Tailwind `rose` scale is re-tinted to a dusty rose,
- * so every existing rose-* utility in the app picks up the new brand colour (accent text/buttons meet 4.5:1).
+ * 2IN.CORNER design system. The Tailwind `rose` scale is re-tinted to a dusty rose,
+ * so every rose-* utility in the app picks up the new brand colour (accent text/buttons meet 4.5:1).
  */
 @theme {
   --color-rose-50: #fdf5f6;
@@ -107,7 +106,6 @@ h3 {
   letter-spacing: -0.005em;
 }
 
-/* Visible keyboard focus everywhere */
 :focus-visible {
   outline: 2px solid var(--color-rose-600);
   outline-offset: 2px;

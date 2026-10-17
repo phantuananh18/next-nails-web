@@ -28,7 +28,6 @@ var MAX_EMAIL_ATTEMPTS = 5;
 var PENDING_EMAIL_GRACE_MS = 2 * 60 * 1000;
 var STALE_SENDING_MS = 15 * 60 * 1000;
 
-// ---------------------------------------------------------------- entry points
 
 function doGet() {
   return jsonResponse_({ ok: true, service: '2in-corner-booking' });
@@ -56,7 +55,6 @@ function jsonResponse_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
-// ---------------------------------------------------------------- auth & validation
 
 function authenticateRequest(p) {
   var expected = PropertiesService.getScriptProperties().getProperty('API_SECRET');
@@ -102,7 +100,6 @@ function sanitizeCell_(value) {
   return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
 }
 
-// ---------------------------------------------------------------- spreadsheet access
 
 function getSpreadsheet_() {
   var id = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
@@ -192,7 +189,6 @@ function nextBookingId_(rows, date) {
   return prefix + ('000' + (max + 1)).slice(-3);
 }
 
-// ---------------------------------------------------------------- handler
 
 function handleCreate_(p) {
   if (!validateRequest(p)) return { ok: false, code: 'BAD_REQUEST' };
@@ -261,7 +257,6 @@ function createBooking(sheet, data, p) {
   };
 }
 
-// ---------------------------------------------------------------- email
 
 function worksheetUrl_(sheet) {
   return getSpreadsheet_().getUrl() + '#gid=' + sheet.getSheetId();

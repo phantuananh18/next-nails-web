@@ -15,16 +15,15 @@ export const bookingConfig = {
   minimumAdvanceMinutes: 60,
   maximumAdvanceDays: 30,
   /**
-   * CONFIRM BEFORE PRODUCTION — default hours, not confirmed by the salon.
    * Keys are weekdays (0 = Sunday … 6 = Saturday); `null` = closed.
    */
   openingHours: {
-    0: { open: "09:00", close: "20:00" },
-    1: { open: "09:00", close: "20:00" },
-    2: { open: "09:00", close: "20:00" },
-    3: { open: "09:00", close: "20:00" },
-    4: { open: "09:00", close: "20:00" },
-    5: { open: "09:00", close: "20:00" },
-    6: { open: "09:00", close: "20:00" },
+    0: { open: "09:00", close: "21:00" },
+    1: { open: "09:00", close: "21:00" },
+    2: { open: "09:00", close: "21:00" },
+    3: { open: "09:00", close: "21:00" },
+    4: { open: "09:00", close: "21:00" },
+    5: { open: "09:00", close: "21:00" },
+    6: { open: "09:00", close: "21:00" },
   } as Record<number, DayHours | null>,
 };

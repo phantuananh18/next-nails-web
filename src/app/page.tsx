@@ -24,7 +24,6 @@ export default function HomePage() {
   return (
     <div>
       <section className="relative overflow-hidden px-4 pb-16 pt-16 sm:px-6 sm:pb-24 sm:pt-24">
-        {/* soft pastel glows */}
         <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-surface opacity-80 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -right-20 top-10 h-72 w-72 rounded-full bg-page-alt opacity-90 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-page-alt opacity-80 blur-3xl" />
