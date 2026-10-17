@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * 2IN.CORNER — "serene studio" design system
+ * Soft blush / lavender / sage pastels on warm cream. The Tailwind `rose` scale is re-tinted to a dusty rose,
+ * so every existing rose-* utility in the app picks up the new brand colour (accent text/buttons meet 4.5:1).
+ */
+@theme {
+  --color-rose-50: #fdf5f6;
+  --color-rose-100: #f9e6ea;
+  --color-rose-200: #f2cdd5;
+  --color-rose-300: #e7abb9;
+  --color-rose-400: #d4819a;
+  --color-rose-500: #c0617f;
+  --color-rose-600: #ab4d69;
+  --color-rose-700: #8c3d55;
+  --color-rose-800: #6d3044;
+  --color-rose-900: #4b212f;
+
+  --color-cream: #fffaf7;
+  --color-ink: #3b2f33;
+  --color-lavender-50: #f6f3fb;
+  --color-lavender-100: #ebe5f6;
+  --color-lavender-300: #c9bde6;
+  --color-sage-50: #f3f8f4;
+  --color-sage-100: #e3efe7;
+  --color-sage-700: #3f6650;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-serif, Georgia, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.005em;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--color-rose-600);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+::selection {
+  background: var(--color-rose-200);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Black marble / liquid chrome approximation for the services price menu (text stays real HTML). */
+.marble-bg {
+  background-color: #0b0b0d;
+  background-image:
+    radial-gradient(ellipse 60% 35% at 15% 10%, rgb(200 205 215 / 0.28), transparent 70%),
+    radial-gradient(ellipse 45% 30% at 85% 30%, rgb(160 165 178 / 0.22), transparent 70%),
+    radial-gradient(ellipse 55% 25% at 30% 65%, rgb(190 195 205 / 0.16), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 90% 90%, rgb(210 214 222 / 0.24), transparent 70%),
+    repeating-linear-gradient(115deg, transparent 0 46px, rgb(255 255 255 / 0.05) 47px 49px, transparent 50px 96px),
+    linear-gradient(160deg, #15151a 0%, #060607 50%, #17171c 100%);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
 }

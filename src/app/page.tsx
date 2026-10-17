@@ -1,84 +1,146 @@
 import Link from "next/link";
-import { getCategories, getGallery } from "@/lib/api";
-import { formatPrice } from "@/lib/format";
+import BeforeAfter from "@/components/BeforeAfter";
+import ContactButtons from "@/components/ContactButtons";
+import BookingRequestForm from "@/components/booking/BookingRequestForm";
+import ServicesSection from "@/components/ServicesSection";
+import Testimonials from "@/components/Testimonials";
+import { salonInfo } from "@/config/salon.config";
+import { getTelHref } from "@/lib/contact";
+import { galleryItems } from "@/config/gallery";
 
-export default async function HomePage() {
-  const [categories, gallery] = await Promise.all([getCategories().catch(() => []), getGallery().catch(() => [])]);
+const steps = [
+  { title: "Chọn ngày & giờ", text: "Chọn thời gian bạn mong muốn trong giờ mở cửa." },
+  { title: "Để lại thông tin", text: "Họ tên và số điện thoại để tiệm liên hệ với bạn." },
+  { title: "Tiệm gọi xác nhận", text: "Tiệm tư vấn dịch vụ và xác nhận lịch hẹn qua điện thoại." },
+];
 
-  const featuredServices = categories.flatMap((c) => c.services).slice(0, 6);
-  const featuredGallery = gallery.filter((g) => g.isFeatured).slice(0, 4);
+export default function HomePage() {
+  // Gallery comes from src/config/gallery.ts (empty until real photos are added => section hidden).
+  const featured = galleryItems.filter((g) => g.isFeatured);
+  const featuredGallery = (featured.length > 0 ? featured : galleryItems).slice(0, 8);
+
+  const telHref = salonInfo.phone ? getTelHref(salonInfo.phone) : null;
+  const socialLinks = [
+    { label: "Facebook", href: salonInfo.facebookUrl },
+    { label: "Instagram", href: salonInfo.instagramUrl },
+    { label: "TikTok", href: salonInfo.tiktokUrl },
+    { label: "Zalo", href: salonInfo.zaloUrl },
+  ].filter((l) => l.href);
 
   return (
     <div>
-      <section className="bg-linear-to-b from-rose-100 to-rose-50/40 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-5xl text-center">
-          <h1 className="text-4xl font-semibold tracking-tight text-rose-700 sm:text-5xl">2IN.CORNER</h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600">
-            Đặt lịch làm nail chỉ trong vài bước — chọn dịch vụ, chọn thợ yêu thích, chọn giờ phù hợp.
+      <section className="relative overflow-hidden px-4 pb-16 pt-16 sm:px-6 sm:pb-24 sm:pt-24">
+        {/* soft pastel glows */}
+        <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-rose-100 opacity-80 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-20 top-10 h-72 w-72 rounded-full bg-lavender-100 opacity-90 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-sage-100 opacity-80 blur-3xl" />
+
+        <div className="animate-fade-up relative mx-auto max-w-3xl text-center">
+          <p className="text-sm font-medium uppercase tracking-[0.25em] text-rose-700">Nail studio</p>
+          <h1 className="mt-4 text-5xl font-semibold text-rose-800 sm:text-7xl">2IN.CORNER</h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-zinc-700">
+            Một góc nhỏ dịu dàng để bạn thư giãn và có bộ móng xinh. Chọn ngày giờ mong muốn và gửi yêu cầu đặt lịch chỉ trong
+            vài bước, tiệm sẽ gọi tư vấn và xác nhận cho bạn.
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="/book"
-              className="rounded-full bg-rose-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-rose-700"
+              href="#booking"
+              className="inline-flex min-h-12 items-center rounded-full bg-rose-600 px-8 text-base font-semibold text-white shadow-md shadow-rose-200 transition-colors hover:bg-rose-700"
             >
               Đặt lịch ngay
             </Link>
             <Link
-              href="/services"
-              className="rounded-full border border-rose-300 px-6 py-3 text-sm font-semibold text-rose-700 transition-colors hover:bg-rose-100"
+              href="#services"
+              className="inline-flex min-h-12 items-center rounded-full border border-rose-300 bg-white/70 px-8 text-base font-semibold text-rose-700 transition-colors hover:bg-rose-50"
             >
               Xem dịch vụ
             </Link>
           </div>
+          <ContactButtons className="mt-3 items-center justify-center" />
         </div>
+
+        <ol className="relative mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">
+          {steps.map((s, i) => (
+            <li key={s.title} className="rounded-3xl border border-white bg-white/70 p-5 shadow-sm shadow-rose-100 backdrop-blur">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-lavender-100 text-sm font-semibold text-rose-800">
+                {i + 1}
+              </span>
+              <h2 className="mt-3 font-display text-xl font-semibold text-ink">{s.title}</h2>
+              <p className="mt-1 text-sm text-zinc-600">{s.text}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-2xl font-semibold text-zinc-800">Dịch vụ nổi bật</h2>
-          <Link href="/services" className="text-sm font-medium text-rose-600 hover:underline">
-            Xem tất cả
-          </Link>
-        </div>
-        {featuredServices.length === 0 ? (
-          <p className="mt-6 text-zinc-500">Chưa có dịch vụ nào được thiết lập.</p>
-        ) : (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredServices.map((s) => (
-              <div key={s.id} className="rounded-2xl border border-rose-100 bg-white p-5 shadow-sm">
-                <h3 className="font-semibold text-zinc-800">{s.name}</h3>
-                {s.description && <p className="mt-1 text-sm text-zinc-500">{s.description}</p>}
-                <div className="mt-4 flex items-center justify-between text-sm">
-                  <span className="font-semibold text-rose-600">{formatPrice(s.price)}</span>
-                  <span className="text-zinc-400">{s.durationMinutes} phút</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+      <ServicesSection />
+
+      <BookingRequestForm />
+
+      <BeforeAfter />
 
       {featuredGallery.length > 0 && (
-        <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-2xl font-semibold text-zinc-800">Thư viện cảm hứng</h2>
-            <Link href="/gallery" className="text-sm font-medium text-rose-600 hover:underline">
+        <section id="gallery" className="mx-auto max-w-5xl scroll-mt-24 px-4 py-16 sm:px-6">
+          <div className="flex items-baseline justify-between gap-4">
+            <h2 className="text-3xl text-ink sm:text-4xl">Thư viện cảm hứng</h2>
+            <Link href="/gallery" className="py-2 text-sm font-medium text-rose-700 hover:underline">
               Xem thêm
             </Link>
           </div>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             {featuredGallery.map((g) => (
-              // eslint-disable-next-line @next/next/no-img-element -- arbitrary external URLs from the catalog, not a static asset
-              <img
-                key={g.id}
-                src={g.imageUrl}
-                alt={g.title ?? "Mẫu nail"}
-                className="aspect-square w-full rounded-2xl object-cover"
-              />
+              <li key={g.id} className="overflow-hidden rounded-3xl bg-white shadow-sm shadow-rose-100">
+                {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary external URLs from the catalog, not a static asset */}
+                <img
+                  src={g.imageUrl}
+                  alt={g.title ?? "Mẫu nail của 2IN.CORNER"}
+                  loading="lazy"
+                  className="aspect-square w-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
+
+      <Testimonials />
+
+      <section id="contact" className="scroll-mt-24 px-4 py-20 sm:px-6">
+        <div className="mx-auto max-w-5xl rounded-4xl bg-sage-50 p-8 sm:p-12">
+          <h2 className="text-3xl text-ink sm:text-4xl">Liên hệ</h2>
+          <dl className="mt-6 space-y-4 text-base text-zinc-700">
+            {salonInfo.address && (
+              <div>
+                <dt className="font-semibold text-ink">Địa chỉ</dt>
+                <dd>
+                  {salonInfo.mapUrl ? (
+                    <a href={salonInfo.mapUrl} className="text-rose-700 underline-offset-2 hover:underline" target="_blank" rel="noreferrer">
+                      {salonInfo.address}
+                    </a>
+                  ) : (
+                    salonInfo.address
+                  )}
+                </dd>
+              </div>
+            )}
+            {salonInfo.phone && (
+              <div>
+                <dt className="font-semibold text-ink">Điện thoại</dt>
+                <dd>
+                  <a href={telHref ?? undefined} className="text-rose-700 underline-offset-2 hover:underline">
+                    {salonInfo.phone}
+                  </a>
+                </dd>
+              </div>
+            )}
+            {salonInfo.openingHoursText && (
+              <div>
+                <dt className="font-semibold text-ink">Giờ mở cửa</dt>
+                <dd>{salonInfo.openingHoursText}</dd>
+              </div>
+            )}
+          </dl>
+        </div>
+      </section>
     </div>
   );
 }
