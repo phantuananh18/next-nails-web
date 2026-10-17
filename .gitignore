@@ -42,5 +42,3 @@ next-env.d.ts
 
 .claude/
 env.example
-/google-apps-script
-CLAUDE.md
