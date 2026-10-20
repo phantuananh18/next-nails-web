@@ -1,24 +1,30 @@
+import GalleryGrid from "@/components/GalleryGrid";
+import type { GalleryItem } from "@/config/gallery";
 import { beforeAfter } from "@/config/showcase";
 
 /** Renders only real, configured before/after photos; renders nothing when there are none. */
 export default function BeforeAfter() {
   if (beforeAfter.length === 0) return null;
+
+  // Each pair becomes two consecutive tiles (before, after) so the shared lightbox can step through them.
+  const items: GalleryItem[] = beforeAfter.flatMap((item, i) => {
+    const suffix = item.caption ? ` · ${item.caption}` : "";
+    return [
+      { id: `before-${i}`, imageUrl: item.beforeUrl, title: `Trước${suffix}` },
+      { id: `after-${i}`, imageUrl: item.afterUrl, title: `Sau${suffix}` },
+    ];
+  });
+
   return (
-    <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
-      <h3 className="text-2xl text-ink">Trước & sau</h3>
-      <ul className="mt-6 grid gap-5 sm:grid-cols-2">
-        {beforeAfter.map((item) => (
-          <li key={item.afterUrl} className="overflow-hidden rounded-3xl bg-surface shadow-sm shadow-black/5">
-            <div className="grid grid-cols-2 gap-px bg-line">
-              {/* eslint-disable-next-line @next/next/no-img-element -- admin-supplied URLs */}
-              <img src={item.beforeUrl} alt="Móng trước khi làm" loading="lazy" className="aspect-square w-full object-cover" />
-              {/* eslint-disable-next-line @next/next/no-img-element -- admin-supplied URLs */}
-              <img src={item.afterUrl} alt="Móng sau khi làm" loading="lazy" className="aspect-square w-full object-cover" />
-            </div>
-            {item.caption && <p className="p-4 text-sm text-muted">{item.caption}</p>}
-          </li>
-        ))}
-      </ul>
+    // No vertical padding: the neighbouring sections (gallery above, services below) already add py-16.
+    <section className="mx-auto max-w-5xl px-4 sm:px-6">
+      <h2 className="text-3xl text-ink sm:text-4xl">Trước & sau</h2>
+      <GalleryGrid
+        items={items}
+        variant="card"
+        listClassName="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+      />
     </section>
   );
 }

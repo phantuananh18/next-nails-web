@@ -19,6 +19,14 @@ export interface BeforeAfterItem {
   caption?: string;
 }
 
+
 export const testimonials: Testimonial[] = [];
 
-export const beforeAfter: BeforeAfterItem[] = [];
+
+export const beforeAfter: BeforeAfterItem[] = [
+  {
+    beforeUrl: "/assets/gallery/image-6.jpg",
+    afterUrl: "/assets/gallery/image-7.jpg",
+    caption: "Cắt da tay"
+  }
+];

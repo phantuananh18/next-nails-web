@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 interface ContactMapProps {
   /** Validated Google Maps Embed URL (iframe src), or null when not configured. */
   embedHref: string | null;
@@ -7,29 +11,43 @@ interface ContactMapProps {
 
 /**
  * Map panel for the contact section. The iframe keeps Google's native colours in both themes (no CSS filters).
+ * It is only mounted after the visitor clicks (facade): no third-party request, cookies or JS on first load,
+ * and the fixed-size container prevents layout shift.
  * The external link sits below the map because Google's own controls occupy the map corners.
  * Without a valid embed URL it falls back to a plain placeholder with the external link; nothing is invented.
  */
 export default function ContactMap({ embedHref, mapHref }: ContactMapProps) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div>
       <div className="h-80 overflow-hidden rounded-3xl border border-line bg-surface dark:border-[#d4d4d4] sm:h-90 lg:h-115">
-        {embedHref ? (
+        {embedHref && loaded ? (
           <iframe
             title="Bản đồ vị trí 2IN.CORNER"
             src={embedHref}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
             allowFullScreen
             className="block h-full w-full border-0"
           />
         ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-2 p-6 text-center text-muted dark:text-[#555555]">
+          <div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-muted dark:text-[#555555]">
             <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z" />
               <circle cx="12" cy="9.5" r="2.5" />
             </svg>
             <p>Xem vị trí tiệm trên Google Maps.</p>
+            {embedHref && (
+              <button
+                type="button"
+                onClick={() => setLoaded(true)}
+                className="inline-flex min-h-11 items-center rounded-full border border-rose-300 px-5 text-sm font-semibold text-accent transition-colors hover:bg-page-alt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 dark:text-[#555555]"
+              >
+                Xem bản đồ
+              </button>
+            )}
           </div>
         )}
       </div>

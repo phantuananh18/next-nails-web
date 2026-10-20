@@ -3,6 +3,7 @@ import BeforeAfter from "@/components/BeforeAfter";
 import ContactButtons from "@/components/ContactButtons";
 import ContactInfo from "@/components/ContactInfo";
 import ContactMap from "@/components/ContactMap";
+import GalleryGrid from "@/components/GalleryGrid";
 import BookingRequestForm from "@/components/booking/BookingRequestForm";
 import ServicesSection from "@/components/ServicesSection";
 import Testimonials from "@/components/Testimonials";
@@ -77,27 +78,20 @@ export default function HomePage() {
               Xem thêm
             </Link>
           </div>
-          <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-            {featuredGallery.map((g) => (
-              <li key={g.id} className="overflow-hidden rounded-3xl bg-surface shadow-sm shadow-black/5">
-                {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary external URLs from the catalog, not a static asset */}
-                <img
-                  src={g.imageUrl}
-                  alt={g.title ?? "Mẫu nail của 2IN.CORNER"}
-                  loading="lazy"
-                  className="aspect-square w-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </li>
-            ))}
-          </ul>
+          <GalleryGrid
+            items={featuredGallery}
+            variant="plain"
+            listClassName="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
+            sizes="(min-width: 1024px) 256px, (min-width: 640px) 25vw, 50vw"
+          />
         </section>
       )}
+
+      <BeforeAfter />
 
       <ServicesSection />
 
       <BookingRequestForm />
-
-      <BeforeAfter />
 
       <Testimonials />
 

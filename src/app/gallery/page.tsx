@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import GalleryGrid from "@/components/GalleryGrid";
 import { galleryItems } from "@/config/gallery";
 
 export const metadata = { title: "Thư viện — 2IN.CORNER" };
@@ -41,20 +42,12 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
         </div>
       )}
 
-      <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {items.map((item) => (
-          <li key={item.id} className="overflow-hidden rounded-3xl border border-line bg-surface shadow-sm shadow-black/5">
-            {/* eslint-disable-next-line @next/next/no-img-element -- owner-supplied image URLs */}
-            <img
-              src={item.imageUrl}
-              alt={item.title ?? "Mẫu nail của 2IN.CORNER"}
-              loading="lazy"
-              className="aspect-square w-full object-cover"
-            />
-            {item.title && <p className="p-3 text-sm text-muted">{item.title}</p>}
-          </li>
-        ))}
-      </ul>
+      <GalleryGrid
+        items={items}
+        variant="card"
+        listClassName="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+      />
     </div>
   );
 }
